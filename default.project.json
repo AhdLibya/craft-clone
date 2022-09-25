@@ -1,0 +1,47 @@
+{
+  "name": "fps",
+  "tree": {
+    "$className": "DataModel",
+    "ReplicatedFirst" :{
+      "$ignoreUnknownInstances": true,
+      "$path": "src/ReplicatedFirst"
+    },
+
+    "ReplicatedStorage": {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/ReplicatedStorage",
+      "Packages" :{
+        "$ignoreUnknownInstances": true,
+        "$path": "Packages"
+      }
+    },
+
+    "ServerScriptService": {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/ServerScriptService"
+    },
+
+    "ServerStorage" : {
+      "$ignoreUnknownInstances": true,
+      "$path": "src/ServerStorage"
+    },
+
+    "StarterPlayer": {
+      "$ignoreUnknownInstances": true,
+      "StarterCharacterScripts" :{
+        "$ignoreUnknownInstances": true,
+        "$path": "src/StarterCharacterScripts"
+      },
+
+      "StarterPlayerScripts": {
+        "$path" : "src/StarterPlayerScripts",
+        "$ignoreUnknownInstances": true
+      }
+    },
+    "SoundService": {
+      "$properties": {
+        "RespectFilteringEnabled": false
+      }
+    }
+  }
+}
