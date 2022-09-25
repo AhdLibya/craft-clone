@@ -25,7 +25,7 @@ jobs:
 
     - name: Lint
       run: |
-        selene .
+        selene ./src
   style:
     name: Styling
     runs-on: ubuntu-latest
@@ -34,4 +34,4 @@ jobs:
     - uses: JohnnyMorganz/stylua-action@1.0.0
       with:
         token: ${{ secrets.GITHUB_TOKEN }}
-        args: --check .
+        args: --check ./src
