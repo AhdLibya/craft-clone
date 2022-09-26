@@ -7,21 +7,24 @@ local Trove = require(Packages:WaitForChild("Trove"))
 local Chunk = require (script.Parent:WaitForChild("Chunk"))
 
 local CAMERA = workspace.CurrentCamera
-local UPDATE_PER_TICK = tick()
-local FREQANCE = 1
+--local UPDATE_PER_TICK = tick()
+--local FREQANCE_UPDATE = 1 -- UPDATE FREQANCE
+local FREQANCE_CREATE = 8 -- CREATE FREQANCE
+
 
 local centerx 
 local centery 
 local chunks = {}
+local counter = 0
 
 
-local function updateCenter()
-    local cameraPostion = CAMERA.CFrame.Position
-    centerx = math.floor(cameraPostion.X / Chunk.WIDTH_X)
-    centery = math.floor(cameraPostion.Z / Chunk.WIDTH_Y)
+
+local function puse()
+    counter  = (counter + 1) % FREQANCE_CREATE
+    if counter == 0 then
+        task.wait(.20)
+    end
 end
-
-
 
 local function chunkExistAtXZ(x , z)
     for _ , chunk in ipairs(chunks) do
@@ -33,9 +36,11 @@ local function chunkExistAtXZ(x , z)
 end
 
 local function gnerate(scene)
+    
     for row = centerx - scene._range , centerx + scene._range do
         for column = centery - scene._range , centery + scene._range do
             if chunkExistAtXZ(row, column) then continue end
+            puse()
             table.insert(chunks , Chunk.new(row, column) )
         end
     end
@@ -48,11 +53,19 @@ local function isChunkOutOfRang(rang , chunk)
     return false
 end
 
+local function updateCenter()
+    local cameraPostion = CAMERA.CFrame.Position
+    centerx = math.floor(cameraPostion.X / Chunk.WIDTH_X)
+    centery = math.floor(cameraPostion.Z / Chunk.WIDTH_Y)
+end
+
 local function clear(scene)
     for index = 1 , #chunks do
         local chunk = chunks[index]
         if not chunk then continue end
         if isChunkOutOfRang(scene._range, chunk) then
+            puse()
+            print("Destroying chunk "..index)
             chunk:Destroy()
             table.remove(chunks,index)
         end
@@ -73,12 +86,9 @@ function Scene.new(rang)
 end
 
 function Scene:render()
-    if tick() - UPDATE_PER_TICK > FREQANCE then 
-        UPDATE_PER_TICK = tick() 
-        updateCenter()
-        clear(self)
-        gnerate(self)
-    end
+    updateCenter()
+    clear(self)
+    gnerate(self)
 end
 
 function Scene:Destroy()

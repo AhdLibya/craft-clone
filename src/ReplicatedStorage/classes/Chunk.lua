@@ -15,7 +15,7 @@ local Trove = require(Packages:WaitForChild("Trove"))
 local SMOOTHNESS = 20
 local TERRAIN_WIDTH = 4
 local TERRAIN_HIGHT = 20
-local DEFUALT_X , DEFUALT_Z = 4 , 4
+local DEFUALT_X , DEFUALT_Z = 10 , 10
 local BLOX_SIZE = Vector3.new(TERRAIN_WIDTH,4,TERRAIN_WIDTH)
 
 -- Private --------------------------------
@@ -54,7 +54,6 @@ function Chunk.new( posx , posz  )
 		z = posz;
 	} , Chunk)
 	local Positions = {}
-	
 	for row = 0 , DEFUALT_X do
 		Positions[row] = {}
 		for column = 0 , DEFUALT_Z do
