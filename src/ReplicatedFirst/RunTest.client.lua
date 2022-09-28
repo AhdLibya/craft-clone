@@ -1,4 +1,4 @@
-local RunService = game:GetService('RunService')
+--local RunService = game:GetService('RunService')
 local Scene = require (game:GetService('ReplicatedStorage'):WaitForChild("classes"):WaitForChild("Scene"))
 
 local RENDER_DISTANCE = 10
