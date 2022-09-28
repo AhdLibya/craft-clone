@@ -9,7 +9,7 @@ local Chunk = require (script.Parent:WaitForChild("Chunk"))
 local CAMERA = workspace.CurrentCamera
 --local UPDATE_PER_TICK = tick()
 --local FREQANCE_UPDATE = 1 -- UPDATE FREQANCE
-local FREQANCE_CREATE = 8 -- CREATE FREQANCE
+local FREQANCE_CREATE = 2 -- CREATE FREQANCE
 
 
 local centerx 
@@ -36,7 +36,6 @@ local function chunkExistAtXZ(x , z)
 end
 
 local function gnerate(scene)
-    
     for row = centerx - scene._range , centerx + scene._range do
         for column = centery - scene._range , centery + scene._range do
             if chunkExistAtXZ(row, column) then continue end
@@ -53,10 +52,11 @@ local function isChunkOutOfRang(rang , chunk)
     return false
 end
 
-local function updateCenter()
+local function updateCenter(scene)
     local cameraPostion = CAMERA.CFrame.Position
-    centerx = math.floor(cameraPostion.X / Chunk.WIDTH_X)
-    centery = math.floor(cameraPostion.Z / Chunk.WIDTH_Y)
+    centerx = math.round(cameraPostion.X / Chunk.WIDTH_X)
+	centery = math.round(cameraPostion.Z / Chunk.WIDTH_Y)
+	gnerate(scene)
 end
 
 local function clear(scene)
@@ -64,7 +64,6 @@ local function clear(scene)
         local chunk = chunks[index]
         if not chunk then continue end
         if isChunkOutOfRang(scene._range, chunk) then
-            puse()
             print("Destroying chunk "..index)
             chunk:Destroy()
             table.remove(chunks,index)
@@ -86,9 +85,8 @@ function Scene.new(rang)
 end
 
 function Scene:render()
-    updateCenter()
-    clear(self)
-    gnerate(self)
+	task.spawn(clear , self)
+	task.spawn(updateCenter , self)
 end
 
 function Scene:Destroy()

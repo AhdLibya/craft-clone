@@ -1,7 +1,7 @@
 local RunService = game:GetService('RunService')
 local Scene = require (game:GetService('ReplicatedStorage'):WaitForChild("classes"):WaitForChild("Scene"))
 
-local RENDER_DISTANCE = 20
+local RENDER_DISTANCE = 10
 local scene = Scene.new(RENDER_DISTANCE)
 local debug do
     local Player = game:GetService('Players').LocalPlayer
@@ -28,5 +28,5 @@ while true do
         scene:render()
     end)
     debug.Text = "fps : "..math.round(workspace:GetRealPhysicsFPS())
-    task.wait()
+    task.wait(1)
 end
